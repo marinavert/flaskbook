@@ -1,2 +1,3 @@
 # flaskbook
-Python Flask によるWebアプリ開発入門
+
+Based on Python Flask による Web アプリ開発入門
