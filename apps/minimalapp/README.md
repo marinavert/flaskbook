@@ -13,7 +13,9 @@ Go to the directory where app.py is :
 - flask run : run the app
 - flask route : list of all possible routes in the website
 
-## app.py
+## Make a minimal app
+
+Create pages that greets with a given name, uses a template for the layout
 
 ① @app.route("/", methods=["GET","POST"], endpoint=endpoint_name)
 You create all the different routes to the different windows of the website.
@@ -39,3 +41,28 @@ In it, you create the function for what you want in your page.
   request.args.get(key): Get a value from the query parameters.
   request.form.get(key): Get a value from the form data.
   request.cookies.get(key): Get a value from the cookies.
+
+## Make a from and send it by email
+
+We want a page to answer the form (username, email, content of inquiry).
+A PRG (POST/REDIRECT/GET) pattern is used.
+
+- Show the "Contact form" page (GET)
+- Send the info by email (POST)
+- Redirect to "Contact complete" (REDIRECT)
+- Show the "Contact complete" page (GET)
+
+| Endpoint         | Methods   | Rule              |
+| ---------------- | --------- | ----------------- |
+| contact          | GET       | /contact          |
+| contact_complete | GET, POST | /contact/complete |
+
+① request and redirect
+Create "contact" and "contact_complete" endpoint, and define what to return depending on the method.
+
+② read the completed forms
+
+③ Flash message and secret_key : used to give immediate feedback
+"pip install email-validator" to validate the input email adresses
+Check if all the fields are correctly filed. If so, the inquiry is sent by email, if not, we go back to "contact" screen to start again.
+The error message appear when you click on submit button
