@@ -1,23 +1,25 @@
 # Tips
 
-## app.py file
+### Methods :
 
-### @app.route("/", methods=["GET","POST"], endpoint=endpoint_name)
+GET is used for requesting data from the server, and the data is sent as query parameters in the URL.
 
+POST is used for submitting data to the server, and the data is sent in the request body.
+
+## Command lines
+
+Go to the directory where app.py is :
+
+- flask run : run the app
+- flask route : list of all possible routes in the website
+
+## app.py
+
+① @app.route("/", methods=["GET","POST"], endpoint=endpoint_name)
 You create all the different routes to the different windows of the website.
 In it, you create the function for what you want in your page.
 
-#### Methods :
-
-GET is used for requesting data from the server, and the data is sent as query parameters in the URL. POST is used for submitting data to the server, and the data is sent in the request body.
-
-## Render_template
-
-In a new folder "templates", html pages are created to work on the visuals of the webpage (color, size, location...)
-
-To run the app, go to the directory where app.py is and in command prompt : flask run
-
-"flask route" : gives the list of all possibles routes/links
+② Render_template : In a new folder "templates", html pages are created to work on the visuals of the webpage (color, size, location...)
 
 ③ "url_for" prints out the different routes given the value of an endpoint and needed variables
 

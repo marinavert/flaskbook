@@ -27,14 +27,14 @@ def hello():
 def hi():
     return "Hi world"
 
-
+#### ① ####
 # Customize the output. On the browser, type 127.0.0.1:5000/hello/marina" for
 # customization
 @app.route("/hello/<name>", methods=["GET", "POST"], endpoint="hello-endpoint")
 def hello2(name):
     return f"Hello, {name}!"
 
-
+#### ② ####
 # Design of the page on html template
 @app.route("/name/<name>")
 def show_name_html(name):
