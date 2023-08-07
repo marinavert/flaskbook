@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, current_app, g, render_template, request, url_for
 
 # create Flask app
 app = Flask(__name__)
@@ -37,5 +37,36 @@ def hello2(name):
 
 # Design of the page on html template
 @app.route("/name/<name>")
-def show_name(name):
+def show_name_html(name):
     return render_template("index.html", name=name)
+
+
+#### ③ ####
+with app.test_request_context():
+    print(url_for("index"))
+    # "/"
+    print(url_for("hello-endpoint", name="world"))
+    # "/hello/world"
+    print(url_for("show_name_html", name="lucas", page="1"))
+    # "/name/lucas?page=1"
+
+
+#### ④ ####
+# This should give an error
+# print(current_app)
+
+# push the app context
+ctx = app.app_context()
+ctx.push()
+
+# Now we have access to current_app
+print(current_app.name)  # "app"
+
+# globally using g
+g.connection = "connection"
+print(g.connection)  # "connection"
+
+
+#### ⑤ ####
+with app.test_request_context("/users?updated=true"):
+    print(request.args.get("updated"))  # true or false depending on line above
