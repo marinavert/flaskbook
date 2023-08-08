@@ -42,7 +42,7 @@ In it, you create the function for what you want in your page.
   request.form.get(key): Get a value from the form data.
   request.cookies.get(key): Get a value from the cookies.
 
-## Make a from and send it by email
+## Make a form and send it by email
 
 We want a page to answer the form (username, email, content of inquiry).
 A PRG (POST/REDIRECT/GET) pattern is used.
