@@ -57,12 +57,25 @@ A PRG (POST/REDIRECT/GET) pattern is used.
 | contact          | GET       | /contact          |
 | contact_complete | GET, POST | /contact/complete |
 
-① request and redirect
+① Request and redirect
 Create "contact" and "contact_complete" endpoint, and define what to return depending on the method.
 
-② read the completed forms
+② Read the completed forms
 
 ③ Flash message and secret_key : used to give immediate feedback
 "pip install email-validator" to validate the input email adresses
 Check if all the fields are correctly filed. If so, the inquiry is sent by email, if not, we go back to "contact" screen to start again.
 The error message appear when you click on submit button
+
+④ Logger to keep tab of what happens
+"pip install flask-debugtoolbar" to install the debugger
+
+⑤ Send emails
+"pip install flask-mail" simplifies sending emails
+To send emails from a gmail account, fiest you  need to configure things
+go to settings -> security -> 2-step validation -> apps passwords 
+Select "others" as app and generate a password
+Then, add mail config in app.py and also in .env
+Finally, create a function that sends an email following a template, that must be created as well (contact_mail.txt, contact_mail.html)
+
+⑥ Cookies, sessions and responses

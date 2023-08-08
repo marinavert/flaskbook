@@ -1,19 +1,42 @@
+import logging
+import os
+
 from email_validator import EmailNotValidError, validate_email
 from flask import (
     Flask,
     current_app,
     flash,
     g,
+    make_response,
     redirect,
     render_template,
     request,
+    session,
     url_for,
 )
+from flask_debugtoolbar import DebugToolbarExtension
+from flask_mail import Mail, Message
 
 # create Flask app
 app = Flask(__name__)
+
 # Add a SECRET_KEY
 app.config["SECRET_KEY"] = "2AZSMss3"
+
+#### ④ ####
+app.debug = True
+app.logger.setLevel(logging.DEBUG)
+app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False  # No redirection
+toolbar = DebugToolbarExtension(app)
+
+app.config["MAIL_SERVER"] = os.environ.get("MAIL_SERVER")
+app.config["MAIL_PORT"] = os.environ.get("MAIL_PORT")
+app.config["MAIL_USE_TLS"] = os.environ.get("MAIL_USE_TLS")
+app.config["MAIL_USERNAME"] = os.environ.get("MAIL_USERNAME")
+app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
+app.config["MAIL_DEFAULT_SENDER"] = os.environ.get("MAIL_DEFAULT_SENDER")
+
+mail = Mail(app)
 
 """
 Minimal app :
@@ -99,6 +122,10 @@ We want a page to answer the form (username, email, content of inquiry)
 #### ① ####
 @app.route("/contact")
 def contact():
+    #### ⑥ ####
+    response = make_response(render_template("contact.html"))
+    response.set_cookie("flaskbook key", "flaskbook value")
+    session["username"] = "marina"
     return render_template("contact.html")
 
 
@@ -133,8 +160,23 @@ def contact_complete():
             return redirect(url_for("contact"))
 
         # send email
+        send_email(
+            email,
+            "Thank you for reaching out",
+            "contact_mail",
+            username=username,
+            description=description,
+        )
 
         # redirect to endpoint
         flash("The inquiry was sent. Thank you for reaching out.")
         return redirect(url_for("contact_complete"))
     return render_template("contact_complete.html")
+
+
+#### ⑤ ####
+def send_email(to, subject, template, **kwargs):
+    msg = Message(subject, recipients=[to])
+    msg.body = render_template(template + ".txt", **kwargs)
+    msg.html = render_template(template + ".html", **kwargs)
+    mail.send(msg)

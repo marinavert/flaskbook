@@ -1,0 +1,7 @@
+Dear {{ username }},
+
+Thank you for reaching out to us.
+
+This is the answer to your inquiry. 
+
+{{ description }}
